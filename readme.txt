@@ -42,3 +42,8 @@ A. No worries, simply ask on the support section on WordPress.org.
 
 Initial release.
 
+
+== Support ==
+
+
+
