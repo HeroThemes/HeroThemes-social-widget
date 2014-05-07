@@ -1,13 +1,88 @@
-body {
-    background-color: white;
-}
+
 
 .ht-icon-preview{
     float: left;
     display: block;
     font-size: 40px;
-    margin: 5px;
 }
+
+ul#ht-social-widget-list li {
+    line-height: 50px;
+    height: 100px;
+    display: block;
+    clear: left;
+    border: 1px solid gray;
+}
+
+ul#ht-social-widget-list li  .wp-picker-input-wrap{
+
+}
+
+.ht-social-widget-item-enable.enabled{
+    color: blue;
+}
+
+li.ht-social-widget-item-enable{
+    display: block;
+    float: left;
+    font-size: 40px;
+}
+
+.ht-icon-preview{
+    cursor: move;
+    margin-right: 10px;
+}
+
+.ht-social-widget-item-name {
+    width: 180px;
+    font-size: 150%;
+}
+
+.ht-icon-preview, 
+.ht-social-widget-item-name, 
+.ht-social-widget-item-enabled, 
+.ht-social-widget-style-select, 
+.ht-social-widget-text-color, 
+.ht-social-widget-background-color, 
+.ht-social-widget-link-url, 
+.ht-social-widget-item-order,
+.ht-social-widget-item-reset{
+    display: block;
+    float: left;
+    margin-left: 10px;
+    line-height: 40px;
+}
+.ht-icon-preview input,
+.ht-social-widget-item-name input,
+.ht-social-widget-item-enabled input,
+.ht-social-widget-style-select input,
+.ht-social-widget-text-color div,
+.ht-social-widget-background-color div,
+.ht-social-widget-link-url input,
+.ht-social-widget-item-order input{
+    margin-left: 5px;
+}
+
+.ht-social-widget-item-order input {
+    /* hide this */
+    width: 30px;
+}
+
+.ht-social-widget-item-reset .button {
+    margin-top: 5px;
+}
+
+.ht-social-widget-link-url{
+    clear: left;
+    margin-left: 65px;
+}
+.ht-social-widget-link-url input{
+    clear: left;
+    width: 500px;
+    
+}
+
+
 
 @font-face {
     font-family: 'Mono Social Icons Font';

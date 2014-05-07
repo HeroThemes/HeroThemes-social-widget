@@ -5,6 +5,10 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 		
 		//constructor
 		function __construct(){
+
+			$this->ht_social_defaults();
+
+			$this->ht_style_dropdown_options();
 			
 			add_action('admin_menu', array( $this, 'ht_social_widget_admin_add_page' ) );
 
@@ -12,30 +16,13 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'ht_social_widget_enqueue_scripts_and_styles' ) );
 
-			$this->ht_social_defaults();
-
-			$this->ht_style_dropdown_options();
-
 		}
 
 		function ht_social_defaults(){
 
-			$this->defaults = array(
-				0 	=> 	array( 'provider_id' => 'facebook',
-							'enabled' => false,
-							'name'	=> __('Facebook', 'ht-social-widget'),
-							'style'	=> 'default',
-							'color' => '#F0FFFF',
-							'background' => '#3b5998',
-					),
-				1 	=> 	array( 'provider_id' => 'twitter',
-							'enabled' => false,
-							'name'	=> __('Twitter', 'ht-social-widget'),
-							'style'	=> 'default',
-							'color' => '#F0FFFF',
-							'background' => '#00aced',
-					),
-				);
+			include_once('ht-social-widget-defaults.php');
+
+			$this->defaults = ht_social_widget_get_social_media_defaults();
 
 		}
 
@@ -114,94 +101,131 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 		*/
 		function ht_social_widget_options_field(){
 			$settings = get_option( 'ht_social_widget_options' );
+			echo '<ul id="ht-social-widget-selector-list">';
+
+				foreach ($this->defaults as $key => $social_provider_default) {
+					//the user option
+					$social_provider_option =  ($settings && is_array($settings) && array_key_exists($key, $settings)) ? $settings[$key] : null;
+					//provider id
+					$provider_id = $social_provider_default['provider_id'];
+					//name
+					$name = $social_provider_default['name'];
+					//enabled
+						$enabled = ($social_provider_option && array_key_exists('enabled', $social_provider_option)) ? $social_provider_option['enabled'] : $social_provider_default['enabled']=="true" ;
+						$display = ($enabled) ? 'enabled' : '';
+					echo "<li class='ht-social-widget-item-enable ".$display."' id='ht-social-widget-item-enable-".$key."' data-key='".$key."'>";
+
+						$this->render_icon($provider_id, '', '', '', $name);
+					echo "</li>";
+				}
+			echo '</ul>';
+
 			echo '<ul id="ht-social-widget-list">';
 			//var_dump($settings);
 
 			foreach ($this->defaults as $key => $social_provider_default) {
 
-					echo "<li>";
+					echo "<li id='ht-social-item-$key'>";
 
-					$provider_id = $social_provider_default['provider_id'];
+						$provider_id = $social_provider_default['provider_id'];
 
-					//the user option
-					$social_provider_option =  ($settings && is_array($settings) && array_key_exists($key, $settings)) ? $settings[$key] : null;
+						//the user option
+						$social_provider_option =  ($settings && is_array($settings) && array_key_exists($key, $settings)) ? $settings[$key] : null;
 
-					//enabled
-					$enabled = ($social_provider_option && array_key_exists('enabled', $social_provider_option)) ? $social_provider_option['enabled'] : $social_provider_default['enabled'] ;
-					//style
-					$style = ($social_provider_option && array_key_exists('style', $social_provider_option)) ? $social_provider_option['style'] : $social_provider_default['style'] ;
-					$style = esc_attr( $style );
-					//color
-					$color = ($social_provider_option && array_key_exists('color', $social_provider_option)) ? $social_provider_option['color'] : $social_provider_default['color'] ;
-					$color = esc_attr( $color );
-					//background
-					$background = ($social_provider_option && array_key_exists('background', $social_provider_option)) ? $social_provider_option['background'] : $social_provider_default['background'] ;
-					$background = esc_attr( $background );
-					//order
-					$order = ($social_provider_option && array_key_exists('order', $social_provider_option)) ? $social_provider_option['order'] : $key;
-					$oder = intval( $order );
+						//enabled
+						$enabled = ($social_provider_option && array_key_exists('enabled', $social_provider_option)) ? $social_provider_option['enabled'] : $social_provider_default['enabled'] ;
+						//name
+						$name = $social_provider_default['name'];
+						//style
+						$style = ($social_provider_option && array_key_exists('style', $social_provider_option)) ? $social_provider_option['style'] : $social_provider_default['style'] ;
+						$style = esc_attr( $style );
+						//color
+						$color = ($social_provider_option && array_key_exists('color', $social_provider_option)) ? $social_provider_option['color'] : $social_provider_default['color'] ;
+						$color = esc_attr( $color );
+						//background
+						$background = ($social_provider_option && array_key_exists('background', $social_provider_option)) ? $social_provider_option['background'] : $social_provider_default['background'] ;
+						$background = esc_attr( $background );
+						//order
+						$order = ($social_provider_option && array_key_exists('order', $social_provider_option)) ? $social_provider_option['order'] : $key;
+						$oder = intval( $order );
+						//url
+						$url = ($social_provider_option && array_key_exists('url', $social_provider_option)) ? $social_provider_option['url'] : $social_provider_default['url'] ;
+						$url = esc_attr( $url );
 
-					//render the icon
-					$this->render_icon_preview($provider_id, $style, $color, $background);
-					
+						echo "<div class='ht-icon-preview'>";
+							//render the icon
+							$this->render_icon($provider_id, $style, $color, $background, $name);
+						echo "</div>"; 
 
-					$checked = ($enabled) ? 'checked' : '';
-   			 		echo "Enabled: <input type='checkbox' name='ht_social_widget_options[$key][enabled]' value='' $checked />";
+						echo "<div class='ht-social-widget-item-name'>";
+							//name
+							$name = esc_attr( $social_provider_default['name'] );
+							echo $name;
+						echo "</div>"; 
 
-					//name
-					$name = esc_attr( $social_provider_default['name'] );
-					echo "Name: " . $name;
-					
-					
-					echo "<select name='ht_social_widget_options[$key][style]'>";
-					foreach ($this->style_options as $option_key => $option) {
-						$selected = ($option_key==$style) ? 'selected' : '';
-						echo "<option value='$option_key' $selected>$option</option>";
-					}
-					echo "<select>";
+						echo "<div class='ht-social-widget-item-enabled'>";
+							$checked = ($enabled) ? 'checked' : '';
+	   			 			echo "<input type='checkbox' name='ht_social_widget_options[$key][enabled]' value='' $checked />";
+	   			 			_e('Enabled', 'ht-social-widget');
+	   			 		echo "</div>"; 			 		
 
-					
-					
-					echo "Text Color: " . "<input class='ht-social-widget-color-picker' type='text' name='ht_social_widget_options[$key][color]' value='$color' />";
-					
-					echo "Background Color: " . "<input class='ht-social-widget-color-picker' type='text' name='ht_social_widget_options[$key][background]' value='$background' />";
-					
-					echo "Order: " . "<input type='text' name='ht_social_widget_options[$key][order]' value='$order' />";
+	   			 		echo "<div class='ht-social-widget-style-select'>";
+							echo "<select name='ht_social_widget_options[$key][style]' data-key='$key'>";
+							foreach ($this->style_options as $option_key => $option) {
+								$selected = ($option_key==$style) ? 'selected' : '';
+								echo "<option value='$option_key' $selected>$option</option>";
+							}
+							echo "</select>";
+						echo "</div>";
+						
 
-					echo "<li/>";
+						echo "<div class='ht-social-widget-text-color' >";
+							_e('Text', 'ht-social-widget');
+							echo "<input class='ht-social-widget-color-picker' type='text' name='ht_social_widget_options[$key][color]' value='$color' data-key='$key' />";
+						echo "</div>";
+
+						echo "<div class='ht-social-widget-background-color'>";
+							_e('Background', 'ht-social-widget');
+							echo "<input class='ht-social-widget-color-picker' type='text' name='ht_social_widget_options[$key][background]' value='$background' data-key='$key' />";
+						echo "</div>";
+
+						echo "<div class='ht-social-widget-link-url'>";
+							_e('Link URL', 'ht-social-widget');
+							echo "<input type='text' name='ht_social_widget_options[$key][url]' value='$url' />";
+						echo "</div>";
+
+						echo "<div class='ht-social-widget-item-order'>";
+							echo "<input type='text' name='ht_social_widget_options[$key][order]' value='$order' />";
+						echo "</div>";
+
+						echo "<div class='ht-social-widget-item-reset'>";
+							$reset_text = __('Reset', 'ht-social-widget');
+							echo "<a class='button' data-value='$key' value='$reset_text' />$reset_text</a>";
+						echo "</div>";
+
+					echo "</li>";
 				
 			}	
 
 			echo '<ul>';		
 		}
 
-		function render_icon_preview($id, $style, $color, $background){
-			echo '<div class="ht-icon-preview">';
-			$this->render_icon($id, $style, $color, $background);
-			echo '</div>';
 
-		}
-
-		function render_icon($id, $style, $color, $background){
-			$inline = "style='color:".$color.";background-color:".$background.";'";
-			switch ($id) {
-				case 'facebook':
-					# code...
-					echo '<span class="symbol" '.$inline.'>'.$style.'facebook</span>';
-					break;
-				case 'twitter':
-					# code...
-					echo '<span class="symbol" '.$inline.'>'.$style.'twitter</span>';
-					break;
-				
-				default:
-					break;
+		function render_icon($id, $style, $color, $background, $title){
+			if($color||$background){
+				$inline = "style='color:".$color.";background-color:".$background.";'";
+			} else {
+				$inline = "";
 			}
+				
+			echo '<span class="symbol" '.$inline.' title="'.$title.'">'.$style.$id.'</span>';
+			
 		}
 
 		function ht_social_widget_enqueue_scripts_and_styles( $hook_suffix ) {
 		    wp_enqueue_style( 'wp-color-picker' );
 		    wp_enqueue_script( 'ht-social-widget-script', plugins_url('js/ht-social-widget-script.js', dirname(__FILE__) ), array( 'wp-color-picker' ), false, true );
+		    wp_localize_script( 'ht-social-widget-script', 'htSocialDefaults', $this->defaults );
 		}
 
 	} //end class
