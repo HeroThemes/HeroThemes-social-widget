@@ -26,6 +26,21 @@ li.ht-social-widget-item-enable{
     display: block;
     float: left;
     font-size: 40px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+}
+
+ul#ht-social-widget-selector-list li.sortable-placeholder{
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px dashed gray;
+    margin: 0;
+    padding: 0;
+    display: inline;
+    float: left;
 }
 
 .ht-icon-preview{
@@ -66,6 +81,10 @@ li.ht-social-widget-item-enable{
 .ht-social-widget-item-order input {
     /* hide this */
     width: 30px;
+}
+
+.ht-social-widget-item-order{
+    display: none;
 }
 
 .ht-social-widget-item-reset .button {

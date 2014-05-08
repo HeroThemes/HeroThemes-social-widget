@@ -75,7 +75,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 		function ht_social_widget_options_santize($input){
 			foreach ($input as $key => $options) {
 				
-				if( array_key_exists('enabled', $options) ) {
+				if( array_key_exists('enabled', $options) && $options['enabled']=="" ) {
 					$input[$key]['enabled'] = true;
 				} else {
 					$input[$key]['enabled'] = false;
@@ -110,10 +110,13 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 					$provider_id = $social_provider_default['provider_id'];
 					//name
 					$name = $social_provider_default['name'];
+					//order
+					$order = ($social_provider_option && array_key_exists('order', $social_provider_option)) ? $social_provider_option['order'] : $key;
+					$order = intval( $order );
 					//enabled
-						$enabled = ($social_provider_option && array_key_exists('enabled', $social_provider_option)) ? $social_provider_option['enabled'] : $social_provider_default['enabled']=="true" ;
+						$enabled = ($social_provider_option && array_key_exists('enabled', $social_provider_option) && $social_provider_option['enabled']) ? $social_provider_option['enabled'] : $social_provider_default['enabled'];
 						$display = ($enabled) ? 'enabled' : '';
-					echo "<li class='ht-social-widget-item-enable ".$display."' id='ht-social-widget-item-enable-".$key."' data-key='".$key."'>";
+					echo "<li class='ht-social-widget-item-enable ".$display."' id='ht-social-widget-item-enable-".$key."' data-key='".$key."' data-order='".$order."'>";
 
 						$this->render_icon($provider_id, '', '', '', $name);
 					echo "</li>";
@@ -125,7 +128,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 
 			foreach ($this->defaults as $key => $social_provider_default) {
 
-					echo "<li id='ht-social-item-$key'>";
+					echo "<li id='ht-social-item-$key' data-key='$key'>";
 
 						$provider_id = $social_provider_default['provider_id'];
 
@@ -147,7 +150,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 						$background = esc_attr( $background );
 						//order
 						$order = ($social_provider_option && array_key_exists('order', $social_provider_option)) ? $social_provider_option['order'] : $key;
-						$oder = intval( $order );
+						$order = intval( $order );
 						//url
 						$url = ($social_provider_option && array_key_exists('url', $social_provider_option)) ? $social_provider_option['url'] : $social_provider_default['url'] ;
 						$url = esc_attr( $url );
@@ -165,7 +168,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 
 						echo "<div class='ht-social-widget-item-enabled'>";
 							$checked = ($enabled) ? 'checked' : '';
-	   			 			echo "<input type='checkbox' name='ht_social_widget_options[$key][enabled]' value='' $checked />";
+	   			 			echo "<input type='checkbox' name='ht_social_widget_options[$key][enabled]' data-key='$key' value='' $checked  />";
 	   			 			_e('Enabled', 'ht-social-widget');
 	   			 		echo "</div>"; 			 		
 

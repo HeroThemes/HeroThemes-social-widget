@@ -5,6 +5,7 @@ jQuery(document).ready(function($){
         },
     });
 
+
     $('#ht-social-widget-list').sortable({
         revert: "invalid",
         cursor: "move" ,
@@ -21,20 +22,22 @@ jQuery(document).ready(function($){
         }
     });
 
-    function reorderSocialItems(){
-        var socialItems = $('ul#ht-social-widget-list li');
-
-        if(socialItems.length>0){
-            socialItems.each(function( index ) {
-              var item = $(this);
-              console.log(item);
-              var orderInput  = item.find('.ht-social-widget-item-order input');
-              if(orderInput.length>0){
-                orderInput.val(index);
-              }
-            });
+    $('#ht-social-widget-selector-list').sortable({
+        revert: "invalid",
+        cursor: "move" ,
+        helper: "clone",
+        placeholder : "sortable-placeholder",
+        change: function(event, ui) {
+        },
+        stop: function( event, ui ) {
+            reorderSocialEnable();
+        },
+        start: function( event, ui ) {
+            //can add text placeholder here if required
         }
-    }
+    });
+
+    
 
     //sort on load
     sortListByOrder();
@@ -47,6 +50,20 @@ jQuery(document).ready(function($){
         });
         
         ul.append(li);
+    }
+
+    //sort on load
+    sortEnableListByOrder();
+    function sortEnableListByOrder(){
+        ul = $('ul#ht-social-widget-selector-list'),
+        li = ul.children('li');
+        
+        li.detach().sort(function(a,b) {
+            return $(a).data('order') - $(b).data('order');  
+              });
+        
+        ul.append(li);
+        
     }
 
     
@@ -170,19 +187,81 @@ jQuery(document).ready(function($){
         if(socialItems.length>0){
             socialItems.each(function( index ) {
               var item = $(this);
+              var key = item.data('key');
               //is enabled
               if(item.hasClass('enabled')){
                 //hide details
-                console.log('enabled->'+index);
-                $('li#ht-social-item-'+index).show();
+                console.log('enabled->'+key);
+                $('li#ht-social-item-'+key).show("show");
+                //enabled
+                var enabledInput = $('input[name="ht_social_widget_options['+key+'][enabled]"]');
+                enabledInput.prop('checked', true);
               } else {
-                console.log('not enabled->'+index);
-                $('li#ht-social-item-'+index).hide();
+                console.log('not enabled->'+key);
+                $('li#ht-social-item-'+key).hide("slow");
+                var enabledInput = $('input[name="ht_social_widget_options['+key+'][enabled]"]');
+                enabledInput.prop('checked', false);
               }
             });
         }
     }
 
+    //drag and drop controls
+    function reorderSocialItems(){
+        var socialItems = $('ul#ht-social-widget-list li');
+
+        if(socialItems.length>0){
+            socialItems.each(function( index ) {
+              var item = $(this);
+              var key = item.data('key');
+              console.log(item);
+              var orderInput  = item.find('.ht-social-widget-item-order input');
+              if(orderInput.length>0){
+                orderInput.val(index);
+              }
+              //enable list
+              $('#ht-social-widget-item-enable-'+key).data('order', index);
+
+            });
+            sortEnableListByOrder();
+        }
+    }
+
+
+    //the drag/drop interface
+    function reorderSocialEnable(){
+        var socialItems = $('ul#ht-social-widget-selector-list li');
+
+        if(socialItems.length>0){
+            socialItems.each(function( index ) {
+
+                
+              var item = $(this);
+              //key
+              var key = item.data('key');
+              //set new order
+              item.data('order', index);
+              console.log(item);
+              //the control
+              var control = $('li#ht-social-item-'+key);
+
+              var orderInput  = control.find('.ht-social-widget-item-order input');
+              if(orderInput.length>0){
+                orderInput.val(index);
+              }
+            });
+        };
+        sortListByOrder();
+    }
+
+    //enable click
+    $('.ht-social-widget-item-enabled input').on('click', function(e, ui){
+        var item = $(this);
+        //key
+        var key = item.data('key');
+        e.preventDefault();
+        toggleEnabled(key);
+    });
 
 
 
