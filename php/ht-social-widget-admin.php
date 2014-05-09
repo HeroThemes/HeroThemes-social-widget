@@ -4,9 +4,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 	class HT_Social_Widget_Admin{
 		
 		//constructor
-		function __construct(){
-
-			$this->ht_social_defaults();
+		function __construct(){			
 
 			$this->ht_style_dropdown_options();
 			
@@ -16,16 +14,26 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'ht_social_widget_enqueue_scripts_and_styles' ) );
 
+			//include the common rendering functions
+			include_once('ht-social-widget-common-functions.php');		
+
 		}
 
+
+		/**
+		* Get the defaults
+		*/
 		function ht_social_defaults(){
 
 			include_once('ht-social-widget-defaults.php');
 
-			$this->defaults = ht_social_widget_get_social_media_defaults();
+			$this->defaults = HT_Social_Widget_Defaults::get_social_media_defaults();
 
 		}
 
+		/**
+		* Populate the dropdown options
+		*/
 		function ht_style_dropdown_options(){
 			$this->style_options = array (
 				'' => __('Default', 'ht-social-widget'),
@@ -66,7 +74,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 			register_setting( 'ht_social_widget_options_group', 'ht_social_widget_options', array( $this, 'ht_social_widget_options_santize' ) );
 			add_settings_section('ht_social_widget_options_main', __('Social Items', 'ht-social-widget'), array($this, 'ht_social_widget_options_group'), 'ht-social-widget-admin');
 			add_settings_field( 'ht_social_widget_options_field1', __('Installed	', 'ht-social-widget'), array($this, 'ht_social_widget_options_field'), 'ht-social-widget-admin', 'ht_social_widget_options_main' );	
-			
+			$this->ht_social_defaults();
 		}
 
 		/**
@@ -75,12 +83,13 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 		function ht_social_widget_options_santize($input){
 			foreach ($input as $key => $options) {
 				
-				if( array_key_exists('enabled', $options) && $options['enabled']=="" ) {
+				if( array_key_exists('enabled', $options) && $options['enabled']==="" ) {
 					$input[$key]['enabled'] = true;
 				} else {
 					$input[$key]['enabled'] = false;
 				}
-				
+
+				$input[$key]['provider_id'] = $this->defaults[$key]['provider_id'];			
 
 			}
 				return $input;
@@ -94,15 +103,20 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 			
 		}
 
-
-
 		/**
 		* Render the options
 		*/
 		function ht_social_widget_options_field(){
 			$settings = get_option( 'ht_social_widget_options' );
-			echo '<ul id="ht-social-widget-selector-list">';
 
+			//display instructions
+			echo "<div id='ht-social-widget-information'>";
+				_e('Click an icon to activate it, drag and drop to change the icon order. ', 'ht-social-widget');
+				printf( __('Go to the <a href="%s">Widgets</a> page to add the Heroic Social Widget to any active widget area. ', 'ht-social-widget'), admin_url( 'widgets.php' )) ;
+			echo "</div>";
+
+			echo "<ul id='ht-social-widget-selector-list'>";
+				//iterate through the social items to display the enable buttons
 				foreach ($this->defaults as $key => $social_provider_default) {
 					//the user option
 					$social_provider_option =  ($settings && is_array($settings) && array_key_exists($key, $settings)) ? $settings[$key] : null;
@@ -112,20 +126,23 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 					$name = $social_provider_default['name'];
 					//order
 					$order = ($social_provider_option && array_key_exists('order', $social_provider_option)) ? $social_provider_option['order'] : $key;
+					//filter
 					$order = intval( $order );
 					//enabled
-						$enabled = ($social_provider_option && array_key_exists('enabled', $social_provider_option) && $social_provider_option['enabled']) ? $social_provider_option['enabled'] : $social_provider_default['enabled'];
-						$display = ($enabled) ? 'enabled' : '';
+					$enabled = ($social_provider_option && array_key_exists('enabled', $social_provider_option) && $social_provider_option['enabled']) ? $social_provider_option['enabled'] : $social_provider_default['enabled'];
+					//display
+					$display = ($enabled) ? 'enabled' : '';
+					//
 					echo "<li class='ht-social-widget-item-enable ".$display."' id='ht-social-widget-item-enable-".$key."' data-key='".$key."' data-order='".$order."'>";
-
-						$this->render_icon($provider_id, '', '', '', $name);
+						HT_Social_Widget_Common_Functions::render_icon($provider_id, '', '', '', $name);
 					echo "</li>";
+
 				}
-			echo '</ul>';
+			echo "</ul>";
 
-			echo '<ul id="ht-social-widget-list">';
-			//var_dump($settings);
+			echo "<ul id='ht-social-widget-list'>";
 
+			//iterate through the social items t o display the controls
 			foreach ($this->defaults as $key => $social_provider_default) {
 
 					echo "<li id='ht-social-item-$key' data-key='$key'>";
@@ -136,7 +153,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 						$social_provider_option =  ($settings && is_array($settings) && array_key_exists($key, $settings)) ? $settings[$key] : null;
 
 						//enabled
-						$enabled = ($social_provider_option && array_key_exists('enabled', $social_provider_option)) ? $social_provider_option['enabled'] : $social_provider_default['enabled'] ;
+						$enabled = ($social_provider_option && array_key_exists('enabled', $social_provider_option) && $social_provider_option['enabled']) ? $social_provider_option['enabled'] : $social_provider_default['enabled'];
 						//name
 						$name = $social_provider_default['name'];
 						//style
@@ -157,7 +174,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 
 						echo "<div class='ht-icon-preview'>";
 							//render the icon
-							$this->render_icon($provider_id, $style, $color, $background, $name);
+							HT_Social_Widget_Common_Functions::render_icon($provider_id, $style, $color, $background, $name);
 						echo "</div>"; 
 
 						echo "<div class='ht-social-widget-item-name'>";
@@ -206,25 +223,15 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 							echo "<a class='button' data-value='$key' value='$reset_text' />$reset_text</a>";
 						echo "</div>";
 
-					echo "</li>";
-				
+					echo "</li>";				
 			}	
 
-			echo '<ul>';		
+			echo "<ul>";		
 		}
 
-
-		function render_icon($id, $style, $color, $background, $title){
-			if($color||$background){
-				$inline = "style='color:".$color.";background-color:".$background.";'";
-			} else {
-				$inline = "";
-			}
-				
-			echo '<span class="symbol" '.$inline.' title="'.$title.'">'.$style.$id.'</span>';
-			
-		}
-
+		/**
+		* Enqueue the scripts and styles
+		*/
 		function ht_social_widget_enqueue_scripts_and_styles( $hook_suffix ) {
 		    wp_enqueue_style( 'wp-color-picker' );
 		    wp_enqueue_script( 'ht-social-widget-script', plugins_url('js/ht-social-widget-script.js', dirname(__FILE__) ), array( 'wp-color-picker' ), false, true );

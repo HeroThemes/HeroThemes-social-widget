@@ -24,6 +24,9 @@ if( !class_exists( 'HT_Social_Widget' ) ){
 			//social widget admin
 			include_once('php/ht-social-widget-admin.php');
 
+			//social widget display
+			include_once('php/ht-social-widget-display.php');
+
 		}
 
 		function ht_social_widget_enqueue_scripts_and_styles(){
@@ -35,9 +38,7 @@ if( !class_exists( 'HT_Social_Widget' ) ){
 
 } //end class exists
 
-
+//load plugin
 if( class_exists( 'HT_Social_Widget' ) ){
-
 	$ht_social_widget_init = new HT_Social_Widget();
-
 }

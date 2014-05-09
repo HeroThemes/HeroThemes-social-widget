@@ -5,7 +5,7 @@ jQuery(document).ready(function($){
         },
     });
 
-
+    //make the control list sortable
     $('#ht-social-widget-list').sortable({
         revert: "invalid",
         cursor: "move" ,
@@ -22,6 +22,7 @@ jQuery(document).ready(function($){
         }
     });
 
+    //make the enable/selector list sortable
     $('#ht-social-widget-selector-list').sortable({
         revert: "invalid",
         cursor: "move" ,
