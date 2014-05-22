@@ -1,3 +1,17 @@
+/* font */
+
+@font-face {
+    font-family: 'Mono Social Icons Font';
+    src: url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.eot');
+    src: url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.eot?#iefix') format('embedded-opentype'),
+         url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.woff') format('woff'),
+         url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.ttf') format('truetype'),
+         url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.svg#MonoSocialIconsFont') format('svg');
+    src: url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 /* ADMIN */
 
@@ -110,20 +124,14 @@ ul.ht-social-media-list li {
     margin-right: 2px;
 }
 
+ul.ht-social-media-list {
+
+}
+
 
 /* SYMBOL */
 
-@font-face {
-    font-family: 'Mono Social Icons Font';
-    src: url('../font/MonoSocialIconsFont-1.10.eot');
-    src: url('../font/MonoSocialIconsFont-1.10.eot?#iefix') format('embedded-opentype'),
-         url('../font/MonoSocialIconsFont-1.10.woff') format('woff'),
-         url('../font/MonoSocialIconsFont-1.10.ttf') format('truetype'),
-         url('../font/MonoSocialIconsFont-1.10.svg#MonoSocialIconsFont') format('svg');
-    src: url('../font/MonoSocialIconsFont-1.10.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 .symbol, a.symbol:before {
     font-family: 'Mono Social Icons Font';
