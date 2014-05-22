@@ -1,24 +1,9 @@
-/* font */
-
-@font-face {
-    font-family: 'Mono Social Icons Font';
-    src: url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.eot');
-    src: url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.eot?#iefix') format('embedded-opentype'),
-         url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.woff') format('woff'),
-         url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.ttf') format('truetype'),
-         url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.svg#MonoSocialIconsFont') format('svg');
-    src: url('http://wordpress/wp-content/plugins/ht-social-widget/font/MonoSocialIconsFont-1.10.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
 /* ADMIN */
 
 .ht-icon-preview{
     float: left;
     display: block;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 ul#ht-social-widget-list li {
@@ -40,11 +25,12 @@ ul#ht-social-widget-list li  .wp-picker-input-wrap{
 li.ht-social-widget-item-enable{
     display: block;
     float: left;
-    font-size: 40px;
+    font-size: 30px;
     cursor: pointer;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
 }
 
 ul#ht-social-widget-selector-list li.sortable-placeholder{
@@ -119,43 +105,12 @@ ul#ht-social-widget-selector-list li.sortable-placeholder{
 /* DISPLAY */
 
 ul.ht-social-media-list li {
-    font-size: 40px;
+    font-size: 30px;
     float: left;
     margin-right: 2px;
+    padding: 5px;
 }
 
-ul.ht-social-media-list {
-
-}
-
-
-/* SYMBOL */
-
-
-
-.symbol, a.symbol:before {
-    font-family: 'Mono Social Icons Font';
-    -webkit-text-rendering: optimizeLegibility;
-    -moz-text-rendering: optimizeLegibility;
-    -ms-text-rendering: optimizeLegibility;
-    -o-text-rendering: optimizeLegibility;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    -ms-font-smoothing: antialiased;
-    -o-font-smoothing: antialiased;
-    font-smoothing: antialiased;
-}
-
-a.symbol:before {
-    content: attr(title);
-    margin-right: 0.3em;
-    font-size: 130%;
-}
-
-a.symbol {
-    background: #9f9f9f;
-    padding: 7px 5px 3px 5px;
-    color: white;
-    text-decoration: none;
+ul.ht-social-media-list li:before{
+    content: '';
 }

@@ -4,7 +4,7 @@
 *	Plugin URI:  http://wordpress.org/plugins/heroic-social-widget/
 *	Description: Social Widget plugin for WordPress
 *	Author: Hero Themes
-*	Version: 1.0
+*	Version: 2.0
 *	Author URI: http://www.herothemes.com/
 *	Text Domain: ht-social-widget
 */
@@ -31,6 +31,7 @@ if( !class_exists( 'HT_Social_Widget' ) ){
 
 		function ht_social_widget_enqueue_scripts_and_styles(){
 			wp_enqueue_style( 'ht-social-widget-display-style', plugins_url( 'css/ht-social-widget-display-style.css', __FILE__ ));
+			wp_enqueue_style( 'font-awesome', plugins_url( 'css/font-awesome.min.css', __FILE__ ));
 		}
 
 

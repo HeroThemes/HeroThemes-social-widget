@@ -58,13 +58,12 @@ if(!class_exists('HT_Social_Widget_Display')){
     		foreach ($social_items as $key => $social_item) {
     			if($social_item['enabled']){
     				$provider_id = $social_item['provider_id'];
-    				$style = $social_item['style'];
     				$color = $social_item['color'];
     				$background = $social_item['background'];
     				$url = $social_item['url'];
     				echo "<li>";
 	    				echo "<a href='".$url."'>";
-	    					HT_Social_Widget_Common_Functions::render_icon($provider_id, $style, $color, $background, '');
+	    					HT_Social_Widget_Common_Functions::render_icon($provider_id, $color, $background, '');
 	    				echo "</a>";
     				echo "</li>";
     			}
@@ -106,6 +105,9 @@ if(!class_exists('HT_Social_Widget_Display')){
       <?php _e( 'Title', 'ht-social-widget' ); ?>
       :
       <input class="widefat" id="<?php echo $this->get_field_id("title"); ?>" name="<?php echo $this->get_field_name("title"); ?>" type="text" value="<?php echo esc_attr($instance["title"]); ?>" />
+    </label>
+    <label for="ht-social-widget-info">
+      <?php printf(__('You can control what icons are displayed and the urls on the %ssettings page%s', 'ht-social-widget'), '<a href="'.admin_url( 'options-general.php?page=ht-social-widget-admin' ).'">', '</a>'); ?>
     </label>
     </p>
     <?php 

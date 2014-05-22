@@ -29,6 +29,10 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 
 			$this->defaults = HT_Social_Widget_Defaults::get_social_media_defaults();
 
+			if(get_option( 'ht_social_widget_options' )==false){
+				update_option('ht_social_widget_options', $this->defaults);
+			}
+
 		}
 
 		/**
@@ -134,7 +138,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 					$display = ($enabled) ? 'enabled' : '';
 					//
 					echo "<li class='ht-social-widget-item-enable ".$display."' id='ht-social-widget-item-enable-".$key."' data-key='".$key."' data-order='".$order."'>";
-						HT_Social_Widget_Common_Functions::render_icon($provider_id, '', '', '', $name);
+						HT_Social_Widget_Common_Functions::render_icon($provider_id, '', '', $name);
 					echo "</li>";
 
 				}
@@ -156,9 +160,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 						$enabled = ($social_provider_option && array_key_exists('enabled', $social_provider_option) && $social_provider_option['enabled']) ? $social_provider_option['enabled'] : $social_provider_default['enabled'];
 						//name
 						$name = $social_provider_default['name'];
-						//style
-						$style = ($social_provider_option && array_key_exists('style', $social_provider_option)) ? $social_provider_option['style'] : $social_provider_default['style'] ;
-						$style = esc_attr( $style );
+						
 						//color
 						$color = ($social_provider_option && array_key_exists('color', $social_provider_option)) ? $social_provider_option['color'] : $social_provider_default['color'] ;
 						$color = esc_attr( $color );
@@ -174,7 +176,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 
 						echo "<div class='ht-icon-preview'>";
 							//render the icon
-							HT_Social_Widget_Common_Functions::render_icon($provider_id, $style, $color, $background, $name);
+							HT_Social_Widget_Common_Functions::render_icon($provider_id, $color, $background, $name);
 						echo "</div>"; 
 
 						echo "<div class='ht-social-widget-item-name'>";
@@ -189,15 +191,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 	   			 			_e('Enabled', 'ht-social-widget');
 	   			 		echo "</div>"; 			 		
 
-	   			 		echo "<div class='ht-social-widget-style-select'>";
-							echo "<select name='ht_social_widget_options[$key][style]' data-key='$key'>";
-							foreach ($this->style_options as $option_key => $option) {
-								$selected = ($option_key==$style) ? 'selected' : '';
-								echo "<option value='$option_key' $selected>$option</option>";
-							}
-							echo "</select>";
-						echo "</div>";
-						
+	   			 		
 
 						echo "<div class='ht-social-widget-text-color' >";
 							_e('Text', 'ht-social-widget');
