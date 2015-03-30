@@ -104,6 +104,10 @@ ul#ht-social-widget-selector-list li.sortable-placeholder{
 
 /* DISPLAY */
 
+ul.ht-social-media-list {
+   list-style-type: none;
+}
+
 ul.ht-social-media-list li {
     font-size: 30px;
     float: left;

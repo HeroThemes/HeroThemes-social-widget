@@ -3,7 +3,7 @@ Contributors: herothemes
 Tags: social, widget, facebook, google plus, twitter, pinterest, instagram
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 2.0
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,18 @@ Heroic Social Widget allows you to add social icons in a widget
 
 == Description ==
 
-Easily create and display links to all your social media, email, rss and more. Rewritten with Font Awesome 4, with 80 customizable social font icons.
+Easily create and display links to all your social media, email, rss and more. Rewritten with Font Awesome 4, with over 80 customizable social font icons.
+
+**Updated for Font Awesome 4.3**
+
+> <strong>About Hero Themes</strong><br>
+> [Hero Themes](http://herothemes.com/) develop some of the best WordPress plugins, tools and themes, with over 10,000 customers and counting. If you like this plugin and want more news, themes and plugins, you can do the following:
+> 
+> * Try our [Heroic Favicon Generator for WordPress](https://wordpress.org/plugins/favhero-favicon-generator/).
+> * Check out the [best WordPress Knowledge Base plugin](http://herothemes.com/plugins/heroic-wordpress-knowledge-base/).
+> * WordPress Gallery Management made easy with [Heroic Gallery Manager](https://wordpress.org/plugins/hero-themes-gallery-manager/).
+> * Follow Hero Themes on [Twitter](https://twitter.com/herothemes) & [Facebook](https://www.facebook.com/herothemes).
+
 
 
 == Installation ==
@@ -40,6 +51,10 @@ A. No worries, simply ask on the support section on WordPress.org.
 
 
 == Changelog ==
+
+= 2.1 =
+
+Updated for font awesome 4.3
 
 = 2.0 =
 

@@ -2,6 +2,8 @@
 
 if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 	class HT_Social_Widget_Admin{
+
+		private $defaults;
 		
 		//constructor
 		function __construct(){			
@@ -100,11 +102,32 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 		}
 
 		/**
-		* Render the options
+		* Render the options group
 		*/
 		function ht_social_widget_options_group(){
 			//nothing to display
 			
+		}
+
+		/**
+		* Get the user value for a particular user_option
+		*/
+		function ht_get_user_option($provider_id, $user_options){
+
+			if( empty($user_options) || !is_array($user_options) ){
+				return $null;
+			}
+				
+
+			foreach ($user_options as $key => $value) {
+				if(array_key_exists('provider_id', $value)){
+					if( $provider_id == $value['provider_id'] ) {
+						return $value;
+					}
+				}
+			}
+
+			return null;
 		}
 
 		/**
@@ -123,7 +146,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 				//iterate through the social items to display the enable buttons
 				foreach ($this->defaults as $key => $social_provider_default) {
 					//the user option
-					$social_provider_option =  ($settings && is_array($settings) && array_key_exists($key, $settings)) ? $settings[$key] : null;
+					$social_provider_option =  $this->ht_get_user_option($social_provider_default['provider_id'], $settings);
 					//provider id
 					$provider_id = $social_provider_default['provider_id'];
 					//name
@@ -154,7 +177,7 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 						$provider_id = $social_provider_default['provider_id'];
 
 						//the user option
-						$social_provider_option =  ($settings && is_array($settings) && array_key_exists($key, $settings)) ? $settings[$key] : null;
+						$social_provider_option =  $this->ht_get_user_option($social_provider_default['provider_id'], $settings);
 
 						//enabled
 						$enabled = ($social_provider_option && array_key_exists('enabled', $social_provider_option) && $social_provider_option['enabled']) ? $social_provider_option['enabled'] : $social_provider_default['enabled'];
