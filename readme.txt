@@ -54,7 +54,7 @@ A. No worries, simply ask on the support section on WordPress.org.
 
 = 2.1 =
 
-Updated for font awesome 4.3
+Updated for Font Awesome 4.3
 
 = 2.0 =
 
