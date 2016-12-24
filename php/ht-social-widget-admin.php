@@ -251,7 +251,8 @@ if( !class_exists( 'HT_Social_Widget_Admin' ) ){
 		*/
 		function ht_social_widget_enqueue_scripts_and_styles( $hook_suffix ) {
 		    wp_enqueue_style( 'wp-color-picker' );
-		    wp_enqueue_script( 'ht-social-widget-script', plugins_url('js/ht-social-widget-script.js', dirname(__FILE__) ), array( 'wp-color-picker' ), false, true );
+		    wp_enqueue_script('jquery-ui-sortable');
+		    wp_enqueue_script( 'ht-social-widget-script', plugins_url('js/ht-social-widget-script.js', dirname(__FILE__) ), array( 'wp-color-picker', 'jquery-ui-sortable' ), false, true );
 		    wp_localize_script( 'ht-social-widget-script', 'htSocialDefaults', $this->defaults );
 		}
 

@@ -2,8 +2,8 @@
 Contributors: herothemes
 Tags: social, widget, facebook, google plus, twitter, pinterest, instagram
 Requires at least: 3.5
-Tested up to: 4.1
-Stable tag: 2.1
+Tested up to: 4.7
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,13 +16,13 @@ Easily create and display links to all your social media, email, rss and more. R
 
 **Updated for Font Awesome 4.3**
 
-> <strong>About Hero Themes</strong><br>
-> [Hero Themes](http://herothemes.com/) develop some of the best WordPress plugins, tools and themes, with over 10,000 customers and counting. If you like this plugin and want more news, themes and plugins, you can do the following:
+> <strong>About HeroThemes</strong><br>
+> [HeroThemes](http://herothemes.com/) develop some of the best WordPress plugins, tools and themes, with over 10,000 customers and counting. If you like this plugin and want more news, themes and plugins, you can do the following:
 > 
 > * Try our [Heroic Favicon Generator for WordPress](https://wordpress.org/plugins/favhero-favicon-generator/).
+> * Explore the [KnowAll WordPress Knowledge Base theme](http://herothemes.com/themes/knowall-wordpress-knowledge-base/).
 > * Check out the [best WordPress Knowledge Base plugin](http://herothemes.com/plugins/heroic-wordpress-knowledge-base/).
-> * WordPress Gallery Management made easy with [Heroic Gallery Manager](https://wordpress.org/plugins/hero-themes-gallery-manager/).
-> * Follow Hero Themes on [Twitter](https://twitter.com/herothemes) & [Facebook](https://www.facebook.com/herothemes).
+> * Follow HeroThemes on [Twitter](https://twitter.com/herothemes) & [Facebook](https://www.facebook.com/herothemes).
 
 
 
@@ -51,6 +51,11 @@ A. No worries, simply ask on the support section on WordPress.org.
 
 
 == Changelog ==
+
+= 2.1.1 =
+
+Small fixes and improvments
+Testing and enhancements for WordPress 4.7
 
 = 2.1 =
 

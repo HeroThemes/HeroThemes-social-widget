@@ -3,14 +3,11 @@
 *	Plugin Name: Heroic Social Widget
 *	Plugin URI:  http://wordpress.org/plugins/heroic-social-widget/
 *	Description: Social Widget plugin for WordPress
-*	Author: Hero Themes
-*	Version: 2.1
+*	Author: HeroThemes
+*	Version: 2.1.1
 *	Author URI: http://www.herothemes.com/
 *	Text Domain: ht-social-widget
 */
-
-
-
 
 if( !class_exists( 'HT_Social_Widget' ) ){
 	class HT_Social_Widget {
