@@ -4,8 +4,8 @@
 *	Plugin URI:  http://wordpress.org/plugins/heroic-social-widget/
 *	Description: Social Widget plugin for WordPress
 *	Author: HeroThemes
-*	Version: 2.1.1
-*	Author URI: http://www.herothemes.com/
+*	Version: 2.2.0
+*	Author URI: https://www.herothemes.com/
 *	Text Domain: ht-social-widget
 */
 

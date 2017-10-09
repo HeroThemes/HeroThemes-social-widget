@@ -76,7 +76,7 @@ ul#ht-social-widget-selector-list li.sortable-placeholder{
 .ht-social-widget-background-color div,
 .ht-social-widget-link-url input,
 .ht-social-widget-item-order input{
-    margin-left: 5px;
+    margin-left: 0px;
 }
 
 .ht-social-widget-item-order input {
